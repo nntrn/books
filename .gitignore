@@ -2,4 +2,6 @@
 .idea/
 *.db
 __*__
+
+#venv
 myproject/
