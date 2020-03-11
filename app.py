@@ -1,12 +1,11 @@
+import json
 import sqlite3
 
-import json
-
-from flask import Flask, render_template
-from flask import jsonify, request, Response
-
-from settings import *
 from BookModel import Book
+from AuthorModel import Author
+from flask import Flask, render_template, Response, jsonify, request
+from settings import *
+
 
 def validate_book(book):
     required = ('name', 'price', 'isbn')
