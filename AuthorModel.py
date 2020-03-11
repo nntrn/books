@@ -33,7 +33,7 @@ class Author(db.Model):
         return Author.json(Author.query.filter_by(first_name=_first_name))
 
     @classmethod
-    def get_authors_by_full_name(cls, _first_name, _last_name):
+    def get_author_by_full_name(cls, _first_name, _last_name):
         return Author.json(Author.query.filter_by(first_name=_first_name, last_name=_last_name).first())
 
     @classmethod
