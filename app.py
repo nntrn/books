@@ -12,6 +12,11 @@ def validate_book(book):
     required = ('name', 'price', 'isbn')
     return all([key in book for key in required])
 
+# GET /
+@app.route("/")
+def hello():
+  return "Annie hearts Spagon (✿~◡~)/"
+
 
 # GET /books
 @app.route('/books', methods=['GET'])
