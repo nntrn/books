@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <title>Books</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Books</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>isbn</th>
+          <th>name</th>
+          <th>price</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <hr />
+
+    <a href="/add-book">Add a book</a>
+
+
+  </div>
+
+  <script>
+    function cleanDOM(el) {
+      while (el.firstChild) {
+        el.removeChild(el.firstChild)
+      }
+    }
+
+    function updateTable(data) {
+      const tbody = document.querySelector('table tbody')
+      cleanDOM(tbody)
+
+      data.books.forEach(book => {
+        let newRow = document.createElement('tr')
+        Object.values(book).forEach(b => {
+          newRow.appendChild(Object.assign(document.createElement('td'), {
+            textContent: b
+          }))
+        })
+        tbody.appendChild(newRow)
+      })
+    }
+
+    function updateDomBookContent() {
+      fetch("/books")
+        .then(response => response.json())
+        .then(data => updateTable(data));
+    }
+
+    function init() {
+      updateDomBookContent()
+    }
+
+    init()
+  </script>
+
+</body>
+
+</html>
