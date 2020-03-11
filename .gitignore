@@ -2,3 +2,4 @@
 .idea/
 *.db
 __*__
+.DS_Store

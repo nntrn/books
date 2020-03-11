@@ -1,8 +1,9 @@
+import json
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import json
 from settings import app
-import os
 
 db = SQLAlchemy(app)
 
