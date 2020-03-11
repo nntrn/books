@@ -25,18 +25,20 @@ class Author(db.Model):
         return [author.json() for author in Author.query.all()]
 
     @classmethod
-    def get_author_by_first_name(cls, _first_name):
-        return Author.json(Author.query.filter_by(first_name=_first_name).first())
+    def get_authors_by_first_name(cls, _first_name):
+        return Author.json(Author.query.filter_by(first_name=_first_name))
 
     @classmethod
-    def delete_author_by_first_name(cls, _isbn):
-        is_successful = Author.query.filter_by(first_name=_first_name).delete()
-        db.session.commit()
-        return bool(is_successful)
+    def get_authors_by_last_name(cls, _first_name):
+        return Author.json(Author.query.filter_by(first_name=_first_name))
 
     @classmethod
-    def delete_author_by_last_name(cls, _isbn):
-        is_successful = Author.query.filter_by(last_name=_last_name).delete()
+    def get_authors_by_full_name(cls, _first_name, _last_name):
+        return Author.json(Author.query.filter_by(first_name=_first_name, last_name=_last_name).first())
+
+    @classmethod
+    def delete_author_by_full_name(cls, _first_name, _last_name):
+        is_successful = Author.query.filter_by(first_name=_first_name, last_name=_last_name).delete()
         db.session.commit()
         return bool(is_successful)
 
