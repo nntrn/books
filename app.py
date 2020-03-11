@@ -2,7 +2,7 @@ import sqlite3
 
 import json
 
-from flask import Flask
+from flask import Flask, render_template
 from flask import jsonify, request, Response
 
 from settings import *
@@ -13,9 +13,9 @@ def validate_book(book):
     return all([key in book for key in required])
 
 # GET /
-@app.route("/")
-def hello():
-  return "Annie hearts Spagon (✿~◡~)/"
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 # GET /books
@@ -78,6 +78,30 @@ def add_book():
     else:
         return Response('Invalid book object. Must include "name", "price", and "isbn"', status=400,
                         mimetype='application/json')
+
+
+# allow both GET and POST requests
+@app.route('/add-book', methods=['GET', 'POST'])
+def add_book_form():
+    
+    # this block is only entered when the form is submitted
+    if request.method == 'POST':
+        isbn = request.form.get('isbn')
+        name = request.form['name']
+        price = request.form['price']
+        
+        Book.add_book(isbn, name, price)
+
+        return '''<h1>You added a new book!</h1>
+                  <div>{}, {}, ${}</div>
+                  <a href="/">View</a>'''.format(isbn, name, price)
+
+    return '''<form method="POST">
+                  ISBN: <input type="number" value="12" name="isbn"><br>
+                  Framework: <input type="text" value="How Things Happen..." name="name"><br>
+                  Price: <input type="number" value="20.00" min="0.01" step="0.01" max="2500" name="price"><br>
+                  <input type="submit" value="Submit"><br>
+              </form>'''
 
 
 if __name__ == '__main__':
